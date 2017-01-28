@@ -18,5 +18,18 @@ class stockMarket:
         with pd.HDFStore("../input/train.h5", "r") as train:
         # Note that the "train" dataframe is the only dataframe in the file
             self.train = train.get("train")
+    
+    def createEnvironment(self):
+        '''
+            Setting up the kagglegym environment
+        '''
+        # Create environment
+        self.env = kagglegym.make()
+        
+        self.observation = self.env.reset()
+        
+        print(self.observation.train.head())
+        print(self.observation.train.shape)
 if __name__ == '__main__':
 	stockObj = stockMarket()
+	stockObj.createEnvironment()
