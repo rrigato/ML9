@@ -37,14 +37,15 @@ class stockMarket:
         '''
         print(self.observation.target.head())
         print(self.observation.target.shape)
-        #print(self.env.step(self.observation.target))
+        print(self.env.step(self.observation.target))
         
         
         '''
             looping through all observations
         '''
+        print(self.observation.target.shape)
         while True:
-            observation, reward, done, info = self.env.step(self.observation.target)
+            self.observation, reward, done, info = self.env.step(self.observation.target)
             if done:
                 break;
         print(info)
