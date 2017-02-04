@@ -1,7 +1,7 @@
 import kagglegym
 import numpy as np
 import pandas as pd
-
+from sklearn import linear_model
 
 
 class stockMarket:
@@ -58,9 +58,28 @@ class stockMarket:
             if done:
                 break;
         print(info)
+        
+    def handleNas(self):
+        '''
+            Handles the missing observations for columns 
+        '''
+        self.train = self.train.fillna(self.train.median())
+    
+    def fitOls(self):
+        '''
+            Fits a simple linear regression
+        '''
+        
+        reg = linear_model.LinearRegression()
+        
+        reg.fit(self.train.loc[:,'timestamp':'technical_44'], self.train.loc[:,'y'])
+        
+        print(reg.coef_)
             
             
 if __name__ == '__main__':
 	stockObj = stockMarket()
 	stockObj.createEnvironment()
-	stockObj.viewData()
+	#stockObj.viewData()
+	stockObj.handleNas()
+	stockObj.fitOls()
