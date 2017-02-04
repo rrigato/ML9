@@ -28,24 +28,33 @@ class stockMarket:
         
         self.observation = self.env.reset()
         
-        print(self.observation.train.head())
-        print(self.observation.train.shape) 
+
     
-    def viewTest(self):
+    def viewData(self):
         '''
             Viewing the test dataframe for Kaggle
         '''
-        print(self.observation.target.head())
-        print(self.observation.target.shape)
-        print(self.env.step(self.observation.target))
-        
+        '''
+            print(self.observation.train.shape) 
+            print(self.observation.features.head())
+            print(self.observation.features.shape)
+            print(self.observation.target.head())
+            print(self.observation.target.shape)
+            print(self.env.step(self.observation.target))
+        '''
         
         '''
             looping through all observations
         '''
-        print(self.observation.target.shape)
         while True:
+        
+            print(self.train.shape) 
+            print(self.observation.features.head())
+            print(self.observation.features.shape)
+            print(self.observation.target.head())
+            print(self.observation.target.shape)
             self.observation, reward, done, info = self.env.step(self.observation.target)
+            
             if done:
                 break;
         print(info)
@@ -54,4 +63,4 @@ class stockMarket:
 if __name__ == '__main__':
 	stockObj = stockMarket()
 	stockObj.createEnvironment()
-	stockObj.viewTest()
+	stockObj.viewData()
