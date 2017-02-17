@@ -2,7 +2,8 @@ import kagglegym
 import numpy as np
 import pandas as pd
 from sklearn import linear_model
-
+from sklearn.model_selection import train_test_split
+from sklearn.model_selection import cross_val_score
 
 class stockMarket:
     def __init__(self):
@@ -70,10 +71,16 @@ class stockMarket:
             Fits a simple linear regression
         '''
         
+        trainX, testX, trainY, testY = train_test_split( self.train.loc[:,'timestamp':'technical_44'], 
+            self.train.loc[:,'y'], test_size=0.4, random_state=0)
+
         reg = linear_model.LinearRegression()
         
-        reg.fit(self.train.loc[:,'timestamp':'technical_44'], self.train.loc[:,'y'])
+        reg.fit(trainX, trainY)
         
+        scores = cross_val_score(reg, trainX, trainY, scoring='r2') 
+        
+        print(scores)
         print(reg.coef_)
             
             
