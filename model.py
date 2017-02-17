@@ -71,17 +71,32 @@ class stockMarket:
             Fits a simple linear regression
         '''
         
+        '''
+            Splitting the data into train and test
+        '''
         trainX, testX, trainY, testY = train_test_split( self.train.loc[:,'timestamp':'technical_44'], 
             self.train.loc[:,'y'], test_size=0.4, random_state=0)
 
+        '''
+            initializing and fitting a simple linear regression model
+        '''
         reg = linear_model.LinearRegression()
         
         reg.fit(trainX, trainY)
         
+        '''
+            Adding a cross validation
+        '''
         scores = cross_val_score(reg, trainX, trainY, scoring='r2') 
+    
         
         print(scores)
         print(reg.coef_)
+        
+        
+        print(reg.predict(self.observation.features.loc['timestamp':'technical_44', :]))
+        
+        
             
             
 if __name__ == '__main__':
