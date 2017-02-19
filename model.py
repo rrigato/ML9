@@ -82,47 +82,54 @@ class stockMarket:
         '''
         reg = linear_model.LinearRegression()
         
-        print(trainX.columns)
+        #print(trainX.columns)
         reg.fit(trainX, trainY)
         
         '''
             Adding a cross validation
         '''
         scores = cross_val_score(reg, trainX, trainY, scoring='r2') 
-    
-        
-        
-        
-        #myResult = reg.predict(self.observation.features.loc[:, 'timestamp':'technical_44'])
-        
-        '''
-            getting the dataframe for this observation which is essientially this set of observations
-            filling the nas with the median
-        '''
-        temp = self.observation.features
-        temp = temp.fillna(temp.median())
-        print(temp.columns)
-        print(temp.loc[:,'timestamp':'technical_44'].head())
-        
-        '''
-            Getting the predictions for this set of observations
-        '''
-        myResult = reg.predict(temp.loc[:, 'timestamp':'technical_44'])
-        
-        output = self.observation.target.head()
-        print(len(myResult))
-        print(output.shape)
-        
-        '''
-            Placing the predictions of the model into the output frame
-        '''
-        #output.loc[:,'y'] = myResult
-        
-        print(output.head())
+
         
         #print(myResult)
         
-        
+        while True:
+                    
+            print(self.observation.features.shape)
+            
+            
+            #myResult = reg.predict(self.observation.features.loc[:, 'timestamp':'technical_44'])
+            
+            '''
+                getting the dataframe for this observation which is essientially this set of observations
+                filling the nas with the median
+            '''
+            temp = self.observation.features
+            temp = temp.fillna(temp.median())
+            #print(temp.columns)
+            #print(temp.loc[:,'timestamp':'technical_44'].head())
+            
+            '''
+                Getting the predictions for this set of observations
+            '''
+            myResult = reg.predict(temp.loc[:, 'timestamp':'technical_44'])
+            
+            output = self.observation.target
+            print(len(myResult))
+            print(output.shape)
+            
+            '''
+                Placing the predictions of the model into the output frame
+            '''
+            output.loc[:,'y'] = myResult
+            
+            print(output.head())
+
+            self.observation, reward, done, info = self.env.step(output)
+            
+            if done:
+                break;
+        print(info)
             
             
 if __name__ == '__main__':
